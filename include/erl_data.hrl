@@ -48,12 +48,5 @@
 -define(ETF_131_LOCAL_EXT,             121). % Alternative local ETF intended to only be decoded by a specific local decoder.
 
 %%--------------------------------------------------------------------------------------------------
-%% DEFINE TYPES
-%%--------------------------------------------------------------------------------------------------
--type erl_data_type() :: atom | binary| bitstring | boolean | float | function
-                       | integer | list | map | pid | port | reference | string
-                       | tuple | unknown.
-
-%%--------------------------------------------------------------------------------------------------
 %% FUNCTIONS
 %%--------------------------------------------------------------------------------------------------

@@ -1,46 +1,54 @@
+%%--------------------------------------------------------------------------------------------------
+%% @doc
+%% This module is an OTP library that contains some basic support functions relate
+%% to Erlang data type.
+%% @end
+%%--------------------------------------------------------------------------------------------------
 -module(erl_data).
--moduledoc """
-This module is an OTP library that contains some basic support functions relate
-to Erlang data type.
-""".
 
-%%--------------------------------------------------------------------------------------------------
-%% INCLUDES
-%%--------------------------------------------------------------------------------------------------
 -include("erl_data.hrl").
 
-%%--------------------------------------------------------------------------------------------------
-%% EXPORT FUNCTIONS
-%%--------------------------------------------------------------------------------------------------
 -export([type_of/1]).
+
+%%--------------------------------------------------------------------------------------------------
+%% DEFINE TYPES
+%%--------------------------------------------------------------------------------------------------
+
+-type erl_data_type() :: atom | binary| bitstring | boolean | float | function
+                       | integer | list | map | pid | port | reference | string
+                       | tuple | unknown.
 
 %%--------------------------------------------------------------------------------------------------
 %% CODE FOR EXPORTED FUNCTIONS
 %%--------------------------------------------------------------------------------------------------
 
--doc """
-Returns data type of Term as an atom if it was a known type, otherwise unknown.
-
-## Note
-Return data type for empty list (nil) is list, not string.
-The return value port is stand for port ID, not the port itself.
-
-## Examples
-```erlang
-1> erl_data:type_of(72).
-integer
-2> erl_data:type_of("hello").
-string
-3> erl_data:type_of(<<"hello">>).
-binary
-4> erl_data:type_of(true).
-boolean
-5> erl_data:type_of(fun() -> io:format("hello") end).
-function
-6> erl_data:type_of([72, 101, 76, 108, 79]).
-string
-```
-""".
+%%--------------------------------------------------------------------------------------------------
+%% @doc
+%% Returns data type of Term as an atom if it was a known type, otherwise unknown.
+%% <br/>
+%% <p><strong>Note</strong></p>
+%% <p>Return data type for empty list (nil) is list, not string.</p>
+%% <p>The return value port is stand for port ID, not the port itself.</p>
+%%
+%% <p><strong>Example</strong></p>
+%% <pre>
+%% 1> erl_data:type_of(72).
+%% integer
+%% 2> erl_data:type_of("hello").
+%% string
+%% 3> erl_data:type_of(<code>&lt;&lt;"hello"&gt;&gt;</code>).
+%% binary
+%% 4> erl_data:type_of(true).
+%% boolean
+%% 5> erl_data:type_of(fun() -> io:format("hello") end).
+%% function
+%% 6> erl_data:type_of([72, 101, 76, 108, 79]).
+%% string
+%% 7> erl_data:type_of("").
+%% list
+%% </pre>
+%% @end
+%%--------------------------------------------------------------------------------------------------
 -spec type_of(Term) -> Type when
     Term :: term(), Type :: erl_data_type().
 type_of(true) ->
@@ -54,6 +62,7 @@ type_of(Term) ->
 %%--------------------------------------------------------------------------------------------------
 %% CODE FOR INTERNAL FUNCTIONS
 %%--------------------------------------------------------------------------------------------------
+
 %% Convert ETF tag to Erlang data type.
 etf_tag_to_type(?ETF_131_NEW_FLOAT_EXT)       -> float;
 etf_tag_to_type(?ETF_131_BIT_BINARY_EXT)      -> bitstring;
